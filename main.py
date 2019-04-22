@@ -43,7 +43,7 @@ while not STATUS:
         snake.movedown()
     if keys[pygame.K_UP]:
         snake.moveup()
-    render.Rendering.redraw_background(SCREEN)
+    render.Rendering(SCREEN, DARK_GREEN, LIGHT_GREEN, WHITE)
     snake.draw()
     pygame.display.update()
 
