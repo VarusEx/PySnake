@@ -2,13 +2,13 @@ from pygame import sprite, image
 
 
 class Snake(sprite.Sprite):
-    screen_size = [1600, 1600]
+    screen_size = [800, 800]
     screen = None
     rect = None
     movment_speed = 20
     x = 240
     y = 40
-    size = 20, 20
+    size = 64
     color = (255, 18, 18)
 
     def __init__(self, screen):
@@ -23,8 +23,8 @@ class Snake(sprite.Sprite):
             self.y -= self.movment_speed
 
     def movedown(self):
-        if self.y >= self.screen_size[0] - self.y:
-            self.y = self.screen_size[0] - self.y
+        if self.y >= self.screen_size[0] - self.size:
+            self.y = self.screen_size[0] - self.size
         else:
             self.y += self.movment_speed
 
@@ -35,8 +35,8 @@ class Snake(sprite.Sprite):
             self.x -= self.movment_speed
 
     def moveright(self):
-        if self.x >= self.screen_size[1] - self.x:
-            self.x = self.screen_size[1] - self.x
+        if self.x >= self.screen_size[1] - self.size:
+            self.x = self.screen_size[1] - self.size
         else:
             self.x += self.movment_speed
 
