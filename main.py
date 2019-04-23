@@ -3,12 +3,14 @@ import pygame
 # My modules
 import render
 import player
+from food import Food
 
 pygame.init()
 
 # Screen settings
 SIZE_WINDOW = width, height = 800, 800
 GAME_TABLE = None
+FOOD = max, current = 5, 0
 SCREEN = None
 STATUS = False
 
@@ -22,9 +24,7 @@ pygame.display.set_caption("PySnake")
 clock = pygame.time.Clock()
 GAME_TABLE = render.Rendering(SCREEN, DARK_GREEN, LIGHT_GREEN, WHITE)
 snake = player.Snake(SCREEN)
-snakegroup = pygame.sprite.Group()
-snakegroup.add(snake)
-snakegroup.update()
+foodgroup = pygame.sprite.Group()
 pygame.display.flip()
 
 while not STATUS:
@@ -43,8 +43,24 @@ while not STATUS:
         snake.movedown()
     if keys[pygame.K_UP]:
         snake.moveup()
-    render.Rendering(SCREEN, DARK_GREEN, LIGHT_GREEN, WHITE)
+
+    GAME_TABLE = render.Rendering(SCREEN, DARK_GREEN, LIGHT_GREEN, WHITE)
+
+    if current < max:
+        current += 1
+        food = Food(SCREEN)
+        foodgroup.add(food)
+        food.draw(SCREEN, snake.get_pos())
+        foodgroup.update()
+    for c in foodgroup:
+        c.redraw(SCREEN)
+        if pygame.sprite.collide_rect(snake, c):
+            current -= 1
+            print("You killed")
+            snake.set_points(c.get_points())
+            c.kill()
     snake.draw()
     pygame.display.update()
+
 
 pygame.quit()

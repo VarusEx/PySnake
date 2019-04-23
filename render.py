@@ -46,7 +46,6 @@ class Rendering(pygame.Surface):
 
     @staticmethod
     def redraw_background(screen):
-        s = screen.copy()
-        screen.blit(source=s, dest=(0, 0))
+        screen.blit(source=screen.copy(), dest=(0, 0))
 
 
