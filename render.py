@@ -14,14 +14,14 @@ class Rendering(pygame.Surface):
     def reset_scene(self, color_1, color_2, container):
         i, x, y = 1, 0, 0
         for i in range(0, 6):
-            container += self.draw_rectengle(0, y, color_1, loops=5)
-            container += self.draw_rectengle(80, y, color_2, loops=5, case=2)
+            container += self.draw_rectengle(0, y, color_1, loops=6)
+            container += self.draw_rectengle(80, y, color_2, loops=6, case=2)
             y += 160
             if y == 800:
                 y = 0
         for i in range(0, 6):
-            container += self.draw_rectengle(80, y + 80, color_1, loops=5, case=2)
-            container += self.draw_rectengle(0, y + 80, color_2, loops=5)
+            container += self.draw_rectengle(80, y + 80, color_1, loops=6, case=2)
+            container += self.draw_rectengle(0, y + 80, color_2, loops=6)
             y += 160
             if y == 800:
                 y = 0
@@ -39,6 +39,15 @@ class Rendering(pygame.Surface):
                 x += 160
             rectengles += [rect]
         return rectengles
+
+    def show_points(self, points):
+        font = pygame.font.Font(None, 80)
+        text = str(points)
+        size = font.size(text)
+        font.set_underline(1)
+        ren = font.render(text, 0, (13, 180, 255))
+        self.SCREEN.blit(ren, (10, 40 + size[1]))
+        font.set_underline(0)
 
     @staticmethod
     def set_background(screen, color_bg=(255, 255, 255)):

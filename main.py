@@ -24,11 +24,15 @@ pygame.display.set_caption("PySnake")
 clock = pygame.time.Clock()
 GAME_TABLE = render.Rendering(SCREEN, DARK_GREEN, LIGHT_GREEN, WHITE)
 snake = player.Snake(SCREEN)
+pos = snake.get_pos()
+tail = player.Tail(pos[0], pos[1], SCREEN)
+snake.body_elements.append(tail)
+tail.master = snake
 foodgroup = pygame.sprite.Group()
 pygame.display.flip()
 
 while not STATUS:
-    clock.tick(30)
+    clock.tick(10)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             STATUS = True
@@ -37,13 +41,12 @@ while not STATUS:
 
     if keys[pygame.K_LEFT]:
         snake.moveleft()
-    if keys[pygame.K_RIGHT]:
+    elif keys[pygame.K_RIGHT]:
         snake.moveright()
-    if keys[pygame.K_DOWN]:
+    elif keys[pygame.K_DOWN]:
         snake.movedown()
-    if keys[pygame.K_UP]:
+    elif keys[pygame.K_UP]:
         snake.moveup()
-
     GAME_TABLE = render.Rendering(SCREEN, DARK_GREEN, LIGHT_GREEN, WHITE)
 
     if current < max:
@@ -56,11 +59,11 @@ while not STATUS:
         c.redraw(SCREEN)
         if pygame.sprite.collide_rect(snake, c):
             current -= 1
-            print("You killed")
             snake.set_points(c.get_points())
             c.kill()
     snake.draw()
+    tail.draw()
+    render.Rendering.show_points(GAME_TABLE, points=snake.get_points())
     pygame.display.update()
-
 
 pygame.quit()
